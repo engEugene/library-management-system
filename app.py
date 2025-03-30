@@ -16,7 +16,14 @@ def create_database():
     conn.close()
 
 def menu():
-   pass
+    """Displays the main menu options for the library management system."""
+    print("\n" + "=" * 30)
+    print("LIBRARY MANAGEMENT SYSTEM")
+    print("=" * 30)
+    print("1. Add a new book")
+    print("2. Display all books")
+    print("3. Exit")
+    print("=" * 30)
 
 def main():
     """Main function with a switch-like menu loop."""
