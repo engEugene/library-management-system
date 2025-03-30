@@ -18,6 +18,9 @@ def create_database():
 def menu():
    pass
 
+def createBook():
+    """ Function is called when inserting books in the db"""
+
 def main():
     """Main function with a switch-like menu loop."""
     create_database()  # Ensure database is created before menu starts
