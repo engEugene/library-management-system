@@ -22,7 +22,10 @@ def menu():
     print("=" * 30)
     print("1. Add a new book")
     print("2. Display all books")
-    print("3. Exit")
+    print("3. Search a book")
+    print("4. Update book")
+    print("5. Delete book")
+    print("6. Exit")
     print("=" * 30)
 
 def main():
@@ -30,13 +33,13 @@ def main():
     create_database()  # Ensure database is created before menu starts
     while True:
         menu()
-        choice = input("Enter your choice: ")
+        choice = input("\nEnter your choice: ")
         
         if choice == "1":
             pass
         elif choice == "2":
             pass
-        elif choice == "3":
+        elif choice == "6":
             print("Exiting program. Goodbye!")
             break
         else:
