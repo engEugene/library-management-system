@@ -6,7 +6,7 @@ The Library Management System is a command-line application built with Python an
 
 ## Features
 
-Librarian functionalities:
+- Librarian functionalities:
 
 1. Add new books
 
@@ -18,15 +18,15 @@ Librarian functionalities:
 
 5. Delete books
 
-Student functionalities:
+- Student functionalities:
 
 1. View all books
 
 2. Search for books
 
-Technologies Used
+- Technologies Used
 
-Python
+Python<br>
 
 SQLite
 
@@ -58,7 +58,7 @@ On running app.py, you will be prompted to log in as a Student or Librarian.
 
 Students can search and view books.
 
-Librarians can manage books (add, update, delete, and view all books).
+Librarians can manage books (add, update, delete, view all books. search for a book, and generate report).
 
 ## Database Structure
 
