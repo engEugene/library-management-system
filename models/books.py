@@ -101,7 +101,7 @@ class Book:
 
     @classmethod
     def find_by_title(cls, title):
-        sql = "SELECT * FROM books WHERE title = ?;"
+        sql = "SELECT * FROM books WHERE LOWER(title) = LOWER(?);"
         result = CURSOR.execute(sql, (title,)).fetchone()
         return cls.instance_from_db(result) if result else None
 
@@ -120,9 +120,10 @@ class Book:
         CURSOR.execute(sql, (self.title, self.author, self.pages, self.id))
         CONN.commit()
 
-    def delete(self):
-        sql = "DELETE FROM books WHERE id = ?;"
-        CURSOR.execute(sql, (self.id,))
+    @staticmethod
+    def delete(book_id):
+        """Deletes a book by its ID."""
+        sql = "DELETE FROM books WHERE id = ?"
+        CURSOR.execute(sql, (book_id,))
         CONN.commit()
-        del type(self).all[self.id]
-        self.id = None
+        return CURSOR.rowcount > 0 
