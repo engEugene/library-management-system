@@ -34,25 +34,21 @@ SQLite
 
 ## Prerequisites
 
-Ensure you have the following installed on your system:
-
-Python (version 3.x recommended)
-
-SQLite (included with Python)
+Ensure you have the following installed on your system: Python, SQLite Python Library
 
 ## Installation Steps
 
 Clone the repository:
 
-git clone <https://github.com/engEugene/library-management-system>
-cd library-management-system
+1. `git clone <https://github.com/engEugene/library-management-system>`
+2. `cd library-management-system`
 
-Install dependencies using pipenv (if required):
+Before you run our application, install necessary dependencies using pipenv:
 
-pip install pipenv
-pipenv install
+`pip install pipenv`
+`pipenv install`
 
-## Run the application:
+## Finally run the application:
 
 python app.py
 
