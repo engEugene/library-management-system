@@ -84,3 +84,13 @@ If you want to contribute:
 4. Push to the branch (git push origin feature-branch)
 
 5. Open a Pull Request
+
+## Challenges faced
+
+Due to time constraints and the initial command-line application scope, we were unable to implement:
+
+- Inventory Management
+
+- Authentication System
+
+- Loan Management
