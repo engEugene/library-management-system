@@ -45,12 +45,12 @@ Clone the repository:
 
 Before you run our application, install necessary dependencies using pipenv:
 
-`pip install pipenv`
+`pip install pipenv`<br>
 `pipenv install`
 
 ## Finally run the application:
 
-python app.py
+`python app.py`
 
 ## Usage
 
