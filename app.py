@@ -1,4 +1,5 @@
 import sqlite3
+from models.books import Book
 
 def create_database():
     """Creates the database and books table if they don't exist."""
@@ -15,69 +16,77 @@ def create_database():
     conn.commit()
     conn.close()
 
-def add_book():
-    """Adds a new book to the database."""
-    try:
-        title = input("Enter book title: ")
-        author = input("Enter book author: ")
-        pages = int(input("Enter number of pages: "))
-        
-        conn = sqlite3.connect('library_management.db')
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO books (title, author, pages) VALUES (?, ?, ?)", 
-                      (title, author, pages))
-        conn.commit()
-        print("Book added successfully!")
-    except ValueError:
-        print("Invalid input! Please enter valid details.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        conn.close()
-
-
-
-def view_books():
-    """Displays all books in the database."""
-    try:
-        conn = sqlite3.connect('library_management.db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM books")
-        books = cursor.fetchall()
-        
-        if not books:
-            print("No books found in the database!")
-            return
-            
-        print("\nList of Books:")
-        print("ID  | Title                 | Author              | Pages")
-        print("-" * 60)
-        for book in books:
-            print(f"{book[0]:<3} | {book[1]:<20} | {book[2]:<20} | {book[3]}")
-            
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        conn.close()
-
 def menu():
-    """Displays the main menu options."""
+    """Displays the menu options."""
     print("\nLibrary Management System")
-    print("1. Add a new book")
-    print("2. View all books")
+    print("1. Add a Book")
+    print("2. View All Books")
     print("3. Exit")
 
+def createBook():
+    """ Function for adding books with validation """
+    while True:
+        title = input("Enter book title: ").strip()
+        if not title:
+            print("Title cannot be empty. Please try again.")
+            continue
+        if not isinstance(title, str):
+            print("Title must be a string. Please try again.")
+            continue
+        if not title.replace(" ", "").isalpha():
+            print("Title must contain only letters and spaces. Please try again.")
+            continue
+        break
+
+    while True:
+        author = input("Enter book author: ").strip()
+        if not author:
+            print("Author cannot be empty. Please try again.")
+            continue
+        if not isinstance(author, str):
+            print("Author must be a string. Please try again.")
+            continue
+        if not author.replace(" ", "").isalpha():
+            print("Author name must contain only letters and spaces. Please try again.")
+            continue
+        break
+
+    while True:
+        try:
+            pages = int(input("Enter number of pages: ").strip())
+            if pages <= 0:
+                raise ValueError
+        except ValueError:
+            print("Pages must be a positive integer. Please try again.")
+            continue
+        break
+
+    new_book = Book.create(title, author, pages)
+    print(f"Book created successfully: {new_book}")
+
+
+def viewBooks():
+    """Function to display all books"""
+    books = Book.get_all()
+    if books:
+        print("\nList of Books:")
+        for book in books:
+            print(book)
+    else:
+        print("\nNo books found.")
+
 def main():
-    """Main function with a switch-like menu loop."""
-    create_database()  # Ensure database is created before menu starts
+    """Main function with a menu loop."""
+    create_database()  # Ensure the database is created before using it
+    
     while True:
         menu()
         choice = input("Enter your choice: ")
-        
+
         if choice == "1":
-            add_book()
+            createBook()
         elif choice == "2":
-            view_books()
+            viewBooks()
         elif choice == "3":
             print("Exiting program. Goodbye!")
             break
