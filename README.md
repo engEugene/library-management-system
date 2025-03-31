@@ -40,7 +40,7 @@ Ensure you have the following installed on your system: Python, SQLite Python Li
 
 Clone the repository:
 
-1. `git clone <https://github.com/engEugene/library-management-system>`
+1. `git clone https://github.com/engEugene/library-management-system`
 2. `cd library-management-system`
 
 Before you run our application, install necessary dependencies using pipenv:
