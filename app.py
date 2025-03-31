@@ -80,6 +80,34 @@ def viewBooks():
     else:
         print("\nNo books found.")
 
+def updateBook():
+    """Function to update book details by title"""
+    title = input("Enter the title of the book to update: ").strip()
+    book = Book.find_by_title(title)  
+
+    if book:
+        print(f"Updating book: {book}")
+        new_title = input(f"Enter new title (Leave blank to keep '{book.title}'): ").strip()
+        new_author = input(f"Enter new author (Leave blank to keep '{book.author}'): ").strip()
+        new_pages = input(f"Enter new page count (Leave blank to keep '{book.pages}'): ").strip()
+
+        # Update only the values that are provided
+        if new_title:
+            book.title = new_title
+        if new_author:
+            book.author = new_author
+        if new_pages:
+            try:
+                book.pages = int(new_pages)
+            except ValueError:
+                print("Invalid page count. Keeping the old value.")
+
+        book.update()
+        print(f"Book '{book.title}' updated successfully.")
+
+    else:
+        print(f"No book found with the title '{title}'.")
+
 def deleteBook():
     """Function to delete a book by title"""
     title = input("Enter the title of the book to delete: ").strip()
@@ -179,13 +207,13 @@ def librarian_actions():
             viewBooks()
         elif choice == "3":
             title = input("Enter the title of the book to search: ").strip()
-            book = Book.find_by_title(title)  # Assuming this method exists
+            book = Book.find_by_title(title)  
             if book:
                 print(f"Book found: {book}")
             else:
                 print("No book found with that title.")
         elif choice == "4":
-            print("Update book functionality not implemented yet.")  # Placeholder
+            updateBook()
         elif choice == "5":
             deleteBook()
         elif choice == "6":
