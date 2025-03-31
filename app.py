@@ -1,6 +1,5 @@
 import sqlite3
 from models.books import Book
-
 def create_database():
     """Creates the database and books table if they don't exist."""
     conn = sqlite3.connect('library_management.db')
