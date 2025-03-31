@@ -81,6 +81,26 @@ def viewBooks():
     else:
         print("\nNo books found.")
 
+def deleteBook():
+    """Function to delete a book by title"""
+    title = input("Enter the title of the book to delete: ").strip()
+    book = Book.find_by_title(title)  # Assuming a method to find a book by title exists in the Book model
+
+    if book:
+        # Check if `book` is an object or an ID
+        book_id = book.id if hasattr(book, 'id') else book
+
+        confirm = input(f"Are you sure you want to delete the book '{book.title}'? (yes/no): ").strip().lower()
+        if confirm == "yes":
+            if Book.delete(book_id):  # Pass the correct ID
+                print(f"Book '{book.title}' deleted successfully.")
+            else:
+                print(f"Failed to delete the book '{book.title}'.")
+        else:
+            print("Deletion canceled.")
+    else:
+        print(f"No book found with the title '{title}'.")
+
 def main():
     """Main function with a menu loop."""
     create_database()  # Ensure the database is created before using it
@@ -92,10 +112,10 @@ def main():
         if choice == "1":
             createBook()
         elif choice == "2":
-            pass
-        elif choice == "6":
             viewBooks()
-        elif choice == "3":
+        elif choice == "5":
+            deleteBook()
+        elif choice == "6":
             print("Exiting program. Goodbye!")
             break
         else:
