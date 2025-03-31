@@ -15,18 +15,18 @@ def create_database():
     conn.commit()
     conn.close()
 
-def menu():
-    """Displays the main menu options for the library management system."""
-    print("\n" + "=" * 30)
-    print("LIBRARY MANAGEMENT SYSTEM")
-    print("=" * 30)
-    print("1. Add a new book")
-    print("2. Display all books")
-    print("3. Search a book")
-    print("4. Update book")
-    print("5. Delete book")
-    print("6. Exit")
-    print("=" * 30)
+# def menu():
+#     """Displays the main menu options for the library management system."""
+#     print("\n" + "=" * 30)
+#     print("LIBRARY MANAGEMENT SYSTEM")
+#     print("=" * 30)
+#     print("1. Add a new book")
+#     print("2. Display all books")
+#     print("3. Search a book")
+#     print("4. Update book")
+#     print("5. Delete book")
+#     print("6. Exit")
+#     print("=" * 30)
 
 def createBook():
     """ Function for adding books with validation """
@@ -100,25 +100,111 @@ def deleteBook():
     else:
         print(f"No book found with the title '{title}'.")
 
-def main():
-    """Main function with a menu loop."""
-    create_database()  # Ensure the database is created before using it
-    
+def login():
+    """Login function to determine user role."""
     while True:
-        menu()
-        choice = input("\nEnter your choice: ")
+        print("\n" + "=" * 30)
+        print("LOGIN to LIBRARY MANAGEMENT SYSTEM")
+        print("=" * 30)
+        print("1. Student")
+        print("2. Librarian")
+        print("3. Exit")
+        print("=" * 30)
+
+        choice = input("Enter your role (1 for Student, 2 for Librarian, 3 to Exit): ").strip()
+
+        if choice == "1":
+            return "student"
+        elif choice == "2":
+            return "librarian"
+        elif choice == "3":
+            print("Exiting program. Goodbye!")
+            exit()
+        else:
+            print("Invalid choice! Please enter a valid option.")
+
+def student_menu():
+    """Displays the student menu options."""
+    print("\n" + "=" * 30)
+    print("STUDENT MENU")
+    print("=" * 30)
+    print("1. View all books")
+    print("2. Search for a book")
+    print("3. Exit to login")
+    print("=" * 30)
+
+def librarian_menu():
+    """Displays the librarian menu options."""
+    print("\n" + "=" * 30)
+    print("LIBRARIAN MENU")
+    print("=" * 30)
+    print("1. Add a new book")
+    print("2. Display all books")
+    print("3. Search for a book")
+    print("4. Update book")
+    print("5. Delete book")
+    print("6. Exit to login")
+    print("=" * 30)
+
+def student_actions():
+    """Handles student-specific actions."""
+    while True:
+        student_menu()
+        choice = input("\nEnter your choice: ").strip()
+
+        if choice == "1":
+            viewBooks()
+        elif choice == "2":
+            title = input("Enter the title of the book to search: ").strip()
+            book = Book.find_by_title(title)  # Assuming this method exists
+            if book:
+                print(f"Book found: {book}")
+            else:
+                print("No book found with that title.")
+        elif choice == "3":
+            print("Returning to login...")
+            break
+        else:
+            print("Invalid choice! Please enter a valid option.")
+
+def librarian_actions():
+    """Handles librarian-specific actions."""
+    while True:
+        librarian_menu()
+        choice = input("\nEnter your choice: ").strip()
 
         if choice == "1":
             createBook()
         elif choice == "2":
             viewBooks()
+        elif choice == "3":
+            title = input("Enter the title of the book to search: ").strip()
+            book = Book.find_by_title(title)  # Assuming this method exists
+            if book:
+                print(f"Book found: {book}")
+            else:
+                print("No book found with that title.")
+        elif choice == "4":
+            print("Update book functionality not implemented yet.")  # Placeholder
         elif choice == "5":
             deleteBook()
         elif choice == "6":
-            print("Exiting program. Goodbye!")
+            print("Returning to login...")
             break
         else:
             print("Invalid choice! Please enter a valid option.")
+
+def main():
+    """Main function with a menu loop."""
+    create_database()  # Ensure the database is created before using it
+    
+    while True:
+        role = login()
+
+        if role == "student":
+            student_actions()
+        elif role == "librarian":
+            librarian_actions()
 
 if __name__ == "__main__":
     main()
