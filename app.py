@@ -1,5 +1,8 @@
 import sqlite3
+import csv
+
 from models.books import Book
+
 def create_database():
     """Creates the database and books table if they don't exist."""
     conn = sqlite3.connect('library_management.db')
@@ -128,6 +131,26 @@ def deleteBook():
     else:
         print(f"No book found with the title '{title}'.")
 
+def generateReport():
+    """Generates a report of all books and saves it as a CSV file."""
+    books = Book.get_all()
+
+    if not books:
+        print("No books available to generate a report.")
+        return
+
+    filename = "library_report.csv"
+
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["ID", "Title", "Author", "Pages"])  # Column Headers
+
+        for book in books:
+            writer.writerow([book.id, book.title, book.author, book.pages])
+
+    print(f"Report generated successfully! File saved as '{filename}'.")
+
+
 def login():
     """Login function to determine user role."""
     while True:
@@ -171,7 +194,8 @@ def librarian_menu():
     print("3. Search for a book")
     print("4. Update book")
     print("5. Delete book")
-    print("6. Exit to login")
+    print("6. Generate report")
+    print("7. Exit to login")
     print("=" * 30)
 
 def student_actions():
@@ -217,6 +241,8 @@ def librarian_actions():
         elif choice == "5":
             deleteBook()
         elif choice == "6":
+            generateReport()
+        elif choice == "7":
             print("Returning to login...")
             break
         else:
